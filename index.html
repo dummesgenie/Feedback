@@ -4,28 +4,95 @@
     <meta charset="UTF-8">
     <title>Feedback</title>
     <style>
-        body{font-family:'Segoe UI'}
+        body{font-family:'Arial'; background-color: #bfefff}
         header{font-family:'Segoe UI'}
 
+        .modal { 
+            display:none; /* standard versteckt */
+            position:fixed; 
+            z-index: 1; /* über allen anderen Inhalten */
+            left: 40%; /* zentriert */
+            top: 40%;  /* zentriert */
+            width: 15%; /* volle Breite */
+            height: 10%; /* volle Höhe */ 
+            overflow: auto; /* falls nötig, scrollen */
+            background-color: rgb(255, 255, 255); /* Schwarz mit Transparenz */
+        }
+
+        .modal-content { /*Frage: Brauche ich diesen Abschnitt, wenn ich den Button im html unten schon formatiert habe?*/
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% von oben und zentriert */
+            padding: 20px;
+            border: 1px solid #d10404;
+            width: 80%; /* Breite des Modals */
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            margin-top: -30px; /*Frage: Wie einstellen ohne es iterativ zu machen?*/
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,   /* wenn Maus drüber */
+        .close:focus { /* wenn Fokus drauf */
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+        }
+
+        counter{
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        
 
     </style>
 </head>
 
 <body>
-    <header>
-        <div class="header-logo-container" style="display: flex; align-items: center; gap: 10px;">
-        <img width="96" height="60" alt="Blume" src="https://github.com/user-attachments/assets/0c526f1b-3f32-4f0b-aae2-9af7b20fd645" />
-        <h1>Feedback</h1>
-        </div>
-    </header>
-
-    <h1>App</h1>
-    <input type="text" name="Eingabe" value="Bitte eingeben: ">
 
     <p>
-    <a href="new.html" onclick="goTo('new.html');return false"><img width="96" height="60" alt="Blume" src="https://github.com/user-attachments/assets/0c526f1b-3f32-4f0b-aae2-9af7b20fd645" /></a>
-    </p>
+    <button id="pop_up" style="border:none; background-color:rgb(0,0,0,0.0)"><div class="smiley" style="font-size: 70px;">
+        &#128522;
+    </div></button>
 
+    <div id="my_first_modal" class="modal">
+        <div class="modal_content">
+            <span class="close">&times;</span>
+                <p style="text-align: center; margin-top:30px;">Vielen Dank für das positive Feedback!</p>
+        </div>
+    </div>
+    </p>
+    
+
+<script>
+   
+    var modal = document.getElementById("my_first_modal"); // Hol das Modal
+    var btn = document.getElementById("pop_up"); // Hol den Button
+    var span = document.getElementsByClassName("close")[0]; // Hol das Schließen-Symbol
+
+    btn.onclick = function(){
+        modal.style.display = "block"; // Zeig das Modal
+        
+    }
+
+    span.onclick = function(){
+        modal.style.display = "none"; // Versteck das Modal
+    }
+
+    //Frage: Das Funktioniert nicht.
+    window.onclick =function(event){ // Wenn irgendwo außerhalb des Modals geklickt wird
+        if(event.target == modal){
+            modal.style.display = "none"; // Versteck das Modal
+        }
+    }
+
+    
+    
+</script>
     
 
 </body>

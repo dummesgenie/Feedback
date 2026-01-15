@@ -6,7 +6,41 @@
 </head>
 
 <body>
+    <header>
+        <div class="header-logo-container" style="display: flex; align-items: center; gap: 10px;">
+        <img width="96" height="60" alt="Blume" src="https://github.com/user-attachments/assets/0c526f1b-3f32-4f0b-aae2-9af7b20fd645" />
+        <h1>Feedback</h1>
+        </div>
+    </header>
+
+    <p>
+    Texteingabe <br>
+    Bitte eingeben: <input type="text" name="Eingabe" value=" ">
+    </p>
+
+
+    <p>
+    Klick auf das Bild, um zur neuen Seite zu gelangen:<br>
+    <a href="new.html"><img width="96" height="60" alt="Blume" src="https://github.com/user-attachments/assets/0c526f1b-3f32-4f0b-aae2-9af7b20fd645" /></a>
+    </p>
+
     <h1>neue Seite</h1>
     <p>Inhalt der neuen Seite</p>
+
+    <p>
+    <div id="content"></div> //Platzhalter für dynamischen Inhalt
+    <a href="#" id="openAbout">Über</a>
+    </p>
+
+    <script>
+    const content = document.getElementById("content");
+    const aboutLink = document.getElementById("openAbout");
+
+    aboutLink.addEventListener("click", (event) => {
+    event.preventDefault(); // extrem wichtig
+    content.innerHTML = "<h1>Über</h1><p>Das ist der neue Inhalt</p>";
+    });
+    </script>
+
 </body>
 </hmtl>

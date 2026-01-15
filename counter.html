@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="de">
+
+    <meta charset="UTF-8">
+
+    <body>
+        Counter anzeigen: <div id="count">0</div> //Frage: Wie kann ich das in einer Zeile anzeigen lassen?
+
+        <button style="border:none; background-color:rgb(0,0,0,0.0)" onclick="increaseCount()"><div class="smiley" style="font-size: 70px;">&#128522</button>
+
+        <script>
+            let count = 0;
+
+            function updateCount(){
+            document.getElementById("count").innerHTML = count;
+            }
+
+            function increaseCount() {
+                count++;
+                updateCount();
+            }
+        </script>
+
+    </body>
+</html>
