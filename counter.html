@@ -1,58 +1,70 @@
 <!DOCTYPE html>
 <html lang="de">
 
+<!--ideen: Balkendiagramm, Schließen Button, Animationen-->
+
     <meta charset="UTF-8">  
 
     <style>
-        rectangle{
+        .rectangle{
             font-family:'Arial';
-            background-color: #00a7df;
+            background-color: #96d4e9;
+            width:310px;
+            height:150px;
+            border:2px solid black;
+            border-radius:15px;
+            text-align: center;
+            display:flex;
+            flex-direction: column;
+            justify-content: center;
         }
+
+        .modal{
+            display:none; /* standard versteckt */
+            position:fixed; 
+            z-index: 1; /* über allen anderen Inhalten */
+            top: 50%;  /* zentriert */
+            border:2px solid black;
+            border-radius:15px;
+            text-align: center;
+            flex-direction: column;
+            justify-content: center;
+            width: 310px; /* volle Breite */
+            height: 90px; /* volle Höhe */ 
+            overflow: auto; /* falls nötig, scrollen */
+            background-color: rgb(255, 255, 255); /* Schwarz mit Transparenz */
+        }
+
+        
+
+
     </style>
     
     <body style="text-align:center;display:flex; justify-content:center; align-items:center;flex-direction:column;">
 
-        <div class="rectangle" style="width:310px; height:80px; border:2px solid black; border-radius:15px; text-align:center; background-color:lightgray; display:inline-block;"; >
-            <h1 style="display:inline-block; margin:0;">Stimmungszähler</h1>  <br>          
-            <span style="display:inline-block; margin-left:10px;">Klicke auf die Smileys, um mir deine Stimmung mitzuteilen!</span>             
+        <div class="rectangle">
+            <h1 style="margin:0;">Stimmungszähler</h1>           
+            <span >Klicke auf die Smileys, um mir deine Stimmung mitzuteilen!</span>             
         </div>
 
         <br>
 
-        <div class="rectangle" style="width:310px; height:100px; border:2px solid black; border-radius:15px; text-align:center;">
-            <button style="border:none; background-color:rgb(0,0,0,0.0)" onclick="increaseCount_pos();procentChange_pos()"><div class="smiley" style="font-size: 70px;">&#128515</button>         
-            <button style="border:none; background-color:rgb(0,0,0,0.0)" onclick="increaseCount_neutral();procentChange_neutral()"><div class="smiley" style="font-size: 70px;">&#128528</button>
-            <button style="border:none; background-color:rgb(0,0,0,0.0)" onclick="increaseCount_neg();procentChange_neg()"><div class="smiley" style="font-size: 70px;">&#128577</button>
+        <div class="rectangle" style="height:85px;display:inline-block;">
+            <button style="border:none; background-color:rgb(0,0,0,0.0)" onclick="increaseCount_pos()"><div class="smiley" style="font-size: 70px;">&#128515</button>         
+            <button style="border:none; background-color:rgb(0,0,0,0.0)" onclick="increaseCount_neutral()"><div class="smiley" style="font-size: 70px;">&#128528</button>
+            <button style="border:none; background-color:rgb(0,0,0,0.0)" onclick="increaseCount_neg()"><div class="smiley" style="font-size: 70px;">&#128577</button>
             
         </div>
 
-        <br><br>
+        <br>
         
-        <div class="rectangle" style="width:310px; height:25px; border:2px solid black; border-radius:15px">
-            <span style="text-align:center;">Statistik anzeigen</span>
-        </div>
+        
+        <button id="show_statistics_button" class="rectangle" style="height:30px">Statistik anzeigen</button>
+        
 
         <br>
-        <!--
-        <div class="counter" style="display:inline-block">
-            <div>
-            Counter für Positiv: <div id="count_pos" style="display:inline-block">0 (<span id="procent_pos" style="display:inline-block">0%</span>)</div>
-            </div>
-
-            <div>
-            Counter für Neutral: <div id="count_neutral" style="display:inline-block">0 (<span id="procent_neutral" style="display:inline-block">0%</span>)</div>
-            </div>
-
-            <div>
-            Counter für Negativ: <div id="count_neg" style="display:inline-block">0 (<span id="procent_neg" style="display:inline-block">0%</span>)</div>
-            </div>
-
-            <div>
-                Counter Gesamt: <div id="count_total" style="display:inline-block">0 (<span id="procent_total" style="display:inline-block">0%</span>)</div>
-            </div>
-        </div> -->
         
-        <div class="counter" style="display:inline-block">
+        <div id="statistics_modal" class="counter modal" style="font-family:Arial;display:flex">
             <div>
             Counter für Positiv: <span id="count_pos" style="display:inline-block">0</span> (<span id="procent_pos" style="display:inline-block">0%</span>)
             </div>
@@ -88,10 +100,10 @@
             }
 
             function updateProcent(){
-                document.getElementById("procent_pos").innerHTML = procent_pos.toFixed(2) + "%";
-                document.getElementById("procent_neutral").innerHTML = procent_neutral.toFixed(2) + "%";
-                document.getElementById("procent_neg").innerHTML = procent_neg.toFixed(2) + "%";
-                document.getElementById("procent_total").innerHTML = procent_total.toFixed(2) + "%";
+                document.getElementById("procent_pos").innerHTML = Math.round(procent_pos) + "%";
+                document.getElementById("procent_neutral").innerHTML = Math.round(procent_neutral) + "%";
+                document.getElementById("procent_neg").innerHTML = Math.round(procent_neg) + "%";
+                document.getElementById("procent_total").innerHTML = procent_total+ "%";
             }
 
             function increaseCount_pos() {
@@ -124,12 +136,6 @@
                 procentChange_total();
                 }           
 
-            /*function Count_total(){
-                count_total=count_pos + count_neutral + count_neg;
-                updateCount();
-                procentChange_total();
-            }*/
-
             function procentChange_pos(){
                 if(count_total > 0) procent_pos = (count_pos / count_total) * 100;
                 else procent_pos = 0;
@@ -154,6 +160,16 @@
             function procentChange_total(){
                 procent_total = 100;
             }  
+
+            var modal = document.getElementById("statistics_modal");
+            var btn = document.getElementById("show_statistics_button");
+
+            btn.onclick = function(){
+                modal.style.display = "block"; // Zeig das Modal
+            }
+
+           document.getElementById("statistics_modal").style.display = "flex";
+           document.getElementById("statistics_modal").style.display = "none";
     
         </script>
 
