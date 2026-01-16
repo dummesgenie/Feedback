@@ -1,40 +1,128 @@
 <!DOCTYPE html>
 <html lang="de">
 
-    <meta charset="UTF-8">
+    <meta charset="UTF-8">  
 
-    <body>
-        <div style="display:inline-block">
-            <div style="display:inline-block">
-            <button style="border:none; background-color:rgb(0,0,0,0.0)" onclick="increaseCount()"><div class="smiley" style="font-size: 70px;">&#128522</button>
-            </div>
+    <style>
+        rectangle{
+            font-family:'Arial';
+            background-color: #00a7df;
+        }
+    </style>
+    
+    <body style="text-align:center;display:flex; justify-content:center; align-items:center;flex-direction:column;">
 
-            <div style="display:inline-block">
-            <button style="border:none; background-color:rgb(0,0,0,0.0)" onclick="increaseCount()"><div class="smiley" style="font-size: 70px;">&#128522</button>
-            </div>
-
-            <div style="display:inline-block">
-            <button style="border:none; background-color:rgb(0,0,0,0.0)" onclick="increaseCount()"><div class="smiley" style="font-size: 70px;">&#128522</button>
-            </div>
+        <div class="rectangle" style="width:310px; height:80px; border:2px solid black; border-radius:15px; text-align:center; background-color:lightgray; display:inline-block;"; >
+            <h1 style="display:inline-block; margin:0;">Stimmungszähler</h1>  <br>          
+            <span style="display:inline-block; margin-left:10px;">Klicke auf die Smileys, um mir deine Stimmung mitzuteilen!</span>             
         </div>
 
-        <div style="display:inline-block">
-        Counter anzeigen: <div id="count" style="display:inline-block">0</div>
+        <br>
+
+        <div class="rectangle" style="width:310px; height:100px; border:2px solid black; border-radius:15px; text-align:center;">
+            <button style="border:none; background-color:rgb(0,0,0,0.0)" onclick="increaseCount_pos()"><div class="smiley" style="font-size: 70px;">&#128515</button>         
+            <button style="border:none; background-color:rgb(0,0,0,0.0)" onclick="increaseCount_neutral()"><div class="smiley" style="font-size: 70px;">&#128528</button>
+            <button style="border:none; background-color:rgb(0,0,0,0.0)" onclick="increaseCount_neg()"><div class="smiley" style="font-size: 70px;">&#128577</button>
+            
         </div>
 
+        <br><br>
         
+        <div class="rectangle" style="width:310px; height:25px; border:2px solid black; border-radius:15px">
+            <span style="text-align:center;">Statistik anzeigen</span>
+        </div>
+
+        <br>
+        <div class="counter" style="display:inline-block">
+            <div>
+        Counter für Positiv: <div id="count_pos" style="display:inline-block">0 (<span id="procent_pos" style="display:inline-block">0%</span>)</div>
+        </div>
+
+        <div>
+        Counter für Neutral: <div id="count_neutral" style="display:inline-block">0 (<span id="procent_neutral" style="display:inline-block">0%</span>)</div>
+        </div>
+
+        <div>
+        Counter für Negativ: <div id="count_neg" style="display:inline-block">0 (<span id="procent_neg" style="display:inline-block">0%</span>)</div>
+        </div>
+
+        <div>
+            Counter Gesamt: <div id="count_total" style="display:inline-block">0 (<span id="procent_total" style="display:inline-block">0%</span>)</div>
+        </div>
+        </div>
+        
+      
 
         <script>
-            let count = 0;
+            let count_pos = 0;
+            let count_neutral = 0;
+            let count_neg = 0;
+            let count_total = 0;
+            let procent_pos = 0;
+            let procent_neutral =0;
+            let procent_neg = 0;
+            let procent_total = 0;
 
             function updateCount(){
-            document.getElementById("count").innerHTML = count;
+                document.getElementById("count_pos").innerHTML = count_pos;
+                document.getElementById("count_neutral").innerHTML = count_neutral;
+                document.getElementById("count_neg").innerHTML = count_neg;
+                document.getElementById("count_total").innerHTML = count_total;
+                Count_total()
             }
 
-            function increaseCount() {
-                count++;
-                updateCount();
+            function updateProcent(){
+                document.getElementById("procent_pos").innerHTML = procent_pos.toFixed(2) + "%";
+                document.getElementById("procent_neutral").innerHTML = procent_neutral.toFixed(2) + "%";
+                document.getElementById("procent_neg").innerHTML = procent_neg.toFixed(2) + "%";
+                document.getElementById("procent_total").innerHTML = procent_total.toFixed(2) + "%";
+                
             }
+
+            function increaseCount_pos() {
+                count_pos++;
+                updateCount();
+                procentChange_pos();
+                }           
+
+            function increaseCount_neutral() {
+                count_neutral++;
+                updateCount();
+                procentChange_neutral();
+                }           
+
+            function increaseCount_neg() {
+                count_neg++;
+                updateCount();
+                procentChange_neg();
+                }           
+
+            function Count_total(){
+                count_total=count_pos + count_neutral + count_neg;
+                updateCount();
+                procentChange_total();
+            }
+
+            function procentChange_pos(){
+                procent_pos = (count_pos / count_total) * 100;
+               updateProcent();
+            }
+
+            function procentChange_neutral(){
+                procent_neutral = (count_neutral / count_total) * 100;
+            updateProcent();
+            }
+
+            function procentChange_neg(){
+                procent_neg = (count_neg / count_total) * 100;
+            updateProcent();
+            }
+
+            function procentChange_total(){
+                procent_total = (count_total / count_total) * 100;
+               updateProcent();
+            }   
+    
         </script>
 
     </body>
